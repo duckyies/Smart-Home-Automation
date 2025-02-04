@@ -107,7 +107,7 @@ class PriorityQueue:
                     return task
             return None
         
-    
+# Testing the code  
 pq = PriorityQueue()
 pq.enqueue(Task("Do laundry", 3))
 pq.enqueue(Task("Finish report", 1))
@@ -121,6 +121,6 @@ pq.dequeue()
 pq.print_queue()
 
 print("\nPeeking at the highest priority task:")
-print(pq.peek())
+print(pq.peek(),"\n")
 
 pq.print_queue()  
