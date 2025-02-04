@@ -41,14 +41,14 @@ class PriorityQueue:
             self.queue.append(new_task)          # If the task was not inserted earlier, we add it at the end
 
 
-    def dequeue(self):
+    def dequeue(self):                           # Dequeuing the element with the most priority.
         with self.lock:
             if not self.queue:
                 raise EmptyListAccessException("The queue is empty")
             self.queue.pop(0)
     
 
-    def peek(self):
+    def peek(self):                  # Returns the element with the most priority without dequeuing the element if the queue isn't empty.
         with self.lock:
             if self.queue:
               return self.queue[0] 
@@ -57,17 +57,24 @@ class PriorityQueue:
               return None
             
 
-    def print_queue(self):
+    def print_queue(self):          # Prints the queue with the priorities too.
         with self.lock:
             for task in self.queue:
                 print(f"Priority: {task.priority}, Task: {task.task}")
 
             
-    def is_empty(self):
+    def is_empty(self):             # Checks if the queue is empty.
         with self.lock:
             if len(self.queue):
                 return True
             
             else:
                 return False
+            
+    
+    def size(self):                    # Checks the size of the queue.
+        with self.lock:
+            return len(self.queue)
+        
+    
         
