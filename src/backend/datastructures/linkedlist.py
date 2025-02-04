@@ -102,8 +102,28 @@ class LinkedList:   # Linked list implementation.
         with self.lock:
             return self.size == 0
         
-    def sortL(self):
+    def PeekandRemoveEnd(self):
+        with self.lock:
+            if not self.head:
+                return None  # List is empty
+                
+            if not self.head.next:
+                val = self.head.val  # Only one element in the list
+                self.head = None
+                self.size -= 1
+                return val
+            
+            temp = self.head
+            while temp.next and temp.next.next:
+                temp = temp.next
+            
+            val = temp.next.val  # Peek the last element
+            temp.next = None  # Remove it
+            self.size -= 1
+            return val
 
+
+    
         
 ll = LinkedList()
 ll.add_end(10)
@@ -113,5 +133,6 @@ ll.print_list()
 print(ll.remove_end())
 print(ll.peek())
 print(ll.get_size())
-
-
+print(ll.PeekandRemoveEnd())
+print(ll.peek_end())
+print(ll.PeekandRemoveEnd())
