@@ -122,6 +122,15 @@ class LinkedList:   # Linked list implementation.
             self.size -= 1
             return val
 
+    def PeekandRemove(self):
+        with self.lock:
+            if not self.head:
+                return None  # List is empty
+            val = self.head.val  # Peek the first element
+            self.head = self.head.next  # Remove it
+            self.size -= 1
+            return val
+
 
     
         
@@ -136,3 +145,6 @@ print(ll.get_size())
 print(ll.PeekandRemoveEnd())
 print(ll.peek_end())
 print(ll.PeekandRemoveEnd())
+ll.add_end(20)
+print(ll.peek())
+print(ll.PeekandRemove())
