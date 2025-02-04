@@ -47,3 +47,7 @@ class PriorityQueue:
                 raise EmptyListAccessException("The queue is empty")
             self.queue.pop(0)
     
+
+    def peek(self):
+        with self.lock:
+            return self.queue[0] if self.queue else None

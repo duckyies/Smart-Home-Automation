@@ -163,7 +163,23 @@ class LinkedList:   # Linked list implementation.
             for val in temp_array:
                 self.add_end(val)
 
-    
+    def remove_index(self, index):
+        with self.lock:
+            if index == 0:
+                self.remove_front()
+                return
+
+            temp_node = self.head
+            current_index = 0
+
+            while temp_node and current_index < index - 1:
+                temp_node = temp_node.next
+                current_index += 1
+
+            if not temp_node or not temp_node.next:
+                raise IndexError("Index out of bounds")
+
+            temp_node.next = temp_node.next.next
 
 
 
