@@ -52,5 +52,22 @@ class PriorityQueue:
         with self.lock:
             if self.queue:
               return self.queue[0] 
+            
             else:
               return None
+            
+
+    def print_queue(self):
+        with self.lock:
+            for task in self.queue:
+                print(f"Priority: {task.priority}, Task: {task.task}")
+
+            
+    def is_empty(self):
+        with self.lock:
+            if len(self.queue):
+                return True
+            
+            else:
+                return False
+        
