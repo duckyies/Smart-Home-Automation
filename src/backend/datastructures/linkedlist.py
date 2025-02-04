@@ -102,7 +102,7 @@ class LinkedList:   # Linked list implementation.
         with self.lock:
             return self.size == 0
         
-    def PeekandRemoveEnd(self):
+    def PeekandRemoveEnd(self):      # Peek and pop the last element.
         with self.lock:
             if not self.head:
                 return None  # List is empty
@@ -122,14 +122,42 @@ class LinkedList:   # Linked list implementation.
             self.size -= 1
             return val
 
-    def PeekandRemove(self):
+    def PeekandRemove(self):    # Peeks and pops the first element
         with self.lock:
             if not self.head:
-                return None  # List is empty
-            val = self.head.val  # Peek the first element
-            self.head = self.head.next  # Remove it
+                return None             # List is empty
+            val = self.head.val             # Peek the first element
+            self.head = self.head.next      # Remove it
             self.size -= 1
             return val
+
+
+
+    def sortLL(self):
+        with self.lock:
+            temp_array = self._make_array_list()  # Convert linked list to a Python list
+            temp_array.sort()  # Sort the list in ascending order
+            self.clear()  # Clear the linked list
+
+            for val in temp_array:  # Reinsert sorted elements into the linked list
+                self.add_end(val)
+
+                
+
+    def _make_array_list(self):
+        temp = self.head
+        array_list = []
+
+        while temp:
+             array_list.append(temp.val)
+             temp = temp.next
+
+        return array_list
+
+
+
+    
+
 
 
     
@@ -148,3 +176,10 @@ print(ll.PeekandRemoveEnd())
 ll.add_end(20)
 print(ll.peek())
 print(ll.PeekandRemove())
+print()
+print(ll.sortLL())
+ll.print_list()
+print()
+print()
+print()
+ll.print_list()
