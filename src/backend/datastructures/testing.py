@@ -1,5 +1,7 @@
 from threading import Lock
 import linkedlist
+import priorityqueue
+
 
 def sortLL(self):
         with self.lock:
@@ -21,3 +23,5 @@ def _make_array_list(self):
         temp = temp.next
 
     return array_list
+
+

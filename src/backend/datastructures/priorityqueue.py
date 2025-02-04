@@ -75,6 +75,61 @@ class PriorityQueue:
     def size(self):                    # Checks the size of the queue.
         with self.lock:
             return len(self.queue)
+
+
+    def clear(self):                    #clears the queue.
+        with self.lock:
+            self.queue.clear()
+
+
+    def contains(self, task):           # Checks if the task is in the queue.
+        with self.lock:
+            if task in self.queue:
+                return True
+            
+            else:
+                return False
+        
+
+    def update_priority(self, task, new_priority):          # Updates the priority of a task
+        with self.lock:
+            if task in self.queue:
+                self.queue.remove(task)
+                task.priority = new_priority
+                self.enqueue(task)
+
+
+    def get_priority(self, task_content):               # Gets the priority of a given task.
+        with self.lock:
+            for task in self.queue:
+                if task.task == task_content:
+                    return task.priority
+            return -1
+        
+
+    def get_task(self, priority):               # Gets the first task the matches the priority.
+        with self.lock:
+            for task in self.queue:
+                if task.priority == priority:
+                    return task
+            return None
         
     
-        
+pq = PriorityQueue()
+pq.enqueue(Task("Do laundry", 3))
+pq.enqueue(Task("Finish report", 1))
+pq.enqueue(Task("Buy groceries", 2))
+
+print("\nQueue after enqueuing:")
+pq.print_queue()
+
+print("\nDequeuing highest priority task")
+pq.dequeue()
+pq.print_queue()
+
+print("\nPeeking at the highest priority task:")
+print(pq.peek())
+
+print("\nUpdating priority of 'Buy groceries' to 0")
+pq.update_priority(Task("Buy groceries", 2), 0)
+pq.print_queue()  
