@@ -142,7 +142,7 @@ class LinkedList:   # Linked list implementation.
             for val in temp_array:  # Reinsert sorted elements into the linked list
                 self.add_end(val)
 
-                
+
 
     def _make_array_list(self):
         temp = self.head
@@ -176,10 +176,3 @@ print(ll.PeekandRemoveEnd())
 ll.add_end(20)
 print(ll.peek())
 print(ll.PeekandRemove())
-print()
-print(ll.sortLL())
-ll.print_list()
-print()
-print()
-print()
-ll.print_list()
