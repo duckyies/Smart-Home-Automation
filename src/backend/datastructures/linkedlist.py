@@ -1,14 +1,14 @@
 import numpy
 import typing
-from threading import Lock
+from threading import Lock   # The threading library contains lock that helps us during multi threading operations.
 import threading
 
-class Node:
+class Node:    # For creation of a node. Each node contains the data and the address of the next node.
     def __init__(self, val):
         self.val = val
         self.next = None
 
-class LinkedList:
+class LinkedList:   # Linked list implementation.
     def __init__(self):
         self.head = None
         self.size = 0
@@ -101,6 +101,9 @@ class LinkedList:
 
         with self.lock:
             return self.size == 0
+        
+    def sortL(self):
+
         
 ll = LinkedList()
 ll.add_end(10)
