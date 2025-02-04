@@ -153,6 +153,17 @@ class LinkedList:   # Linked list implementation.
              temp = temp.next
 
         return array_list
+    
+    def reverse(self):          # Reverses the array
+        with self.lock:
+            temp_array = self.make_array_list()
+            temp_array.reverse()
+            self.clear()
+
+            for val in temp_array:
+                self.add_end(val)
+
+    
 
 
 
