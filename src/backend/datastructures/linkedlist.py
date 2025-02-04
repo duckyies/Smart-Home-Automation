@@ -14,14 +14,14 @@ class LinkedList:   # Linked list implementation.
         self.size = 0
         self.lock = threading.Lock()
 
-    def add_front(self, val):
+    def add_front(self, val):    # Adding a node in the front of the linked list.
         with self.lock:
             new_node = Node(val)
             new_node.next = self.head
             self.head = new_node
             self.size += 1
 
-    def add_end(self, val):
+    def add_end(self, val):     # Adding a node at the end of the linked list.
         new_node = Node(val)
 
         with self.lock:
@@ -35,7 +35,7 @@ class LinkedList:   # Linked list implementation.
                 temp.next = new_node
             self.size += 1
 
-    def remove_front(self):
+    def remove_front(self):         # Removes the node at the front of the linked list.
         with self.lock:
             if not self.head:
                 return None
@@ -44,7 +44,7 @@ class LinkedList:   # Linked list implementation.
             self.size -= 1
             return val
 
-    def remove_end(self):
+    def remove_end(self):           # Removes the node at the end of the linked list.
 
         with self.lock:
             if not self.head:
@@ -64,11 +64,11 @@ class LinkedList:   # Linked list implementation.
             self.size -= 1
             return val
 
-    def peek(self):
+    def peek(self):                 # Gives us the data in the very first node without popping it.
         with self.lock:
             return self.head.val if self.head else None
 
-    def peek_end(self):
+    def peek_end(self):             # Gives us the data at the last node without popping it.
         with self.lock:
             if not self.head:
                 return None
@@ -77,12 +77,12 @@ class LinkedList:   # Linked list implementation.
                 temp = temp.next
             return temp.val
 
-    def get_size(self):
+    def get_size(self):             # Gives us the size of the linked list.
 
         with self.lock:
             return self.size
 
-    def print_list(self):
+    def print_list(self):           # Displays the entire list.
 
         with self.lock:
             temp = self.head
@@ -91,13 +91,13 @@ class LinkedList:   # Linked list implementation.
                 temp = temp.next
             print("None")
 
-    def clear(self):
+    def clear(self):                   # Clears the entire list.
 
         with self.lock:
             self.head = None
             self.size = 0
 
-    def is_empty(self):
+    def is_empty(self):                # Checks if the list is empty.
 
         with self.lock:
             return self.size == 0
