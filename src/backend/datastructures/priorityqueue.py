@@ -91,13 +91,6 @@ class PriorityQueue:
                 return False
         
 
-    def update_priority(self, task, new_priority):          # Updates the priority of a task
-        with self.lock:
-            if task in self.queue:
-                self.queue.remove(task)
-                task.priority = new_priority
-                self.enqueue(task)
-
 
     def get_priority(self, task_content):               # Gets the priority of a given task.
         with self.lock:
@@ -130,6 +123,4 @@ pq.print_queue()
 print("\nPeeking at the highest priority task:")
 print(pq.peek())
 
-print("\nUpdating priority of 'Buy groceries' to 0")
-pq.update_priority(Task("Buy groceries", 2), 0)
 pq.print_queue()  
