@@ -31,13 +31,19 @@ class PriorityQueue:
                 self.queue.append(new_task)
                 return
             
-            # Inserting the task in sorted order
-            for i, task in enumerate(self.queue):
+                                                        
+            for i, task in enumerate(self.queue):           # Inserting the task in sorted order
                 if task.priority > new_task.priority:
                     self.queue.insert(i, new_task)
                     return
 
-            # If not inserted earlier, add at the end
-            self.queue.append(new_task)
+           
+            self.queue.append(new_task)          # If the task was not inserted earlier, we add it at the end
 
+
+    def dequeue(self):
+        with self.lock:
+            if not self.queue:
+                raise EmptyListAccessException("The queue is empty")
+            self.queue.pop(0)
     
