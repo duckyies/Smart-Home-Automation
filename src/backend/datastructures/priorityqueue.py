@@ -50,4 +50,7 @@ class PriorityQueue:
 
     def peek(self):
         with self.lock:
-            return self.queue[0] if self.queue else None
+            if self.queue:
+              return self.queue[0] 
+            else:
+              return None
