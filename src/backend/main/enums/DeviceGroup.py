@@ -1,6 +1,5 @@
 from enum import Enum
-from device import Device
-
+from ..devices.device import Device
 class DeviceGroupEnum(Enum):
     LIGHTS = 10
     FANS = 9
