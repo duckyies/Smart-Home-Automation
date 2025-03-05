@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
+import time
 
 class Device(BaseModel):
     device_id: int
@@ -7,7 +8,7 @@ class Device(BaseModel):
     device_type: str
     location: str
     device_group: str
-    battery_level: float = 100.0
+    battery_level: float = 100.0 
     max_battery_capacity: int = 100
     current_battery_capacity: float = 100.0
     is_on_battery: bool = False
@@ -16,14 +17,13 @@ class Device(BaseModel):
     power_level: int = 0
     turned_on_time: int = 0
     is_interacted: bool = False
-    date_created: datetime = datetime.utcnow()
 
     def flip_interaction_state(self):
         self.is_interacted = not self.is_interacted
 
     def get_minutes_since_turned_on(self):
         if self.turned_on_time:
-            return int((datetime.utcnow().timestamp() - self.turned_on_time) // 60)
+            return int((int(time.time()) - self.turned_on_time) // 60)
         return 0
 
     def set_turned_on(self, status: bool):
@@ -120,9 +120,9 @@ device1 = Device(
     is_turned_on=True,
     base_power_consumption=10.0,
     power_level=5,
-    turned_on_time=int(datetime.utcnow().timestamp()),
+    turned_on_time=int(time.time()),
     is_interacted=False,
-    date_created=datetime.utcnow()
+
 )
 
 
