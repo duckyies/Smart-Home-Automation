@@ -1,7 +1,7 @@
 import threading
-from linkedlist import LinkedList, Node
-class EmptyListAccessException(Exception):
-    pass
+from ..datastructures.linkedlist import LinkedList, Node
+from ..misc import EmptyListAccessException
+
 
 class Task:
     def __init__(self, task, priority):
