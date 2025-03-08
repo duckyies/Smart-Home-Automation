@@ -2,7 +2,7 @@ from ..datastructures import linkedlist, priorityqueue
 from ..devices import AirConditioner, Device
 from ..enums import DeviceGroup, Devicelocation, DeviceType
 from ..misc import RuleParsingException
-from ..tasks import LogTask, rule, Task
+from ..tasks import LogTask, Rule
 
 import logging
 import random
@@ -10,6 +10,7 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 import concurrent.futures
+
 
 
 class SmartHome:
@@ -103,7 +104,7 @@ class SmartHome:
         powerLevel: int = 1,
     ) -> Device:
 
-        if deviceGroup.name.lower() == "AirConditioners".lower():
+        if deviceGroup.name.lower() == "airconditioners":
             return AirConditioner.AirConditioner(
                 deviceName,
                 deviceType,
@@ -131,7 +132,7 @@ class SmartHome:
     def addDevice(self, device: Device):
 
         if (
-            device.device_group.name.lower() == "AirConditioners".lower()
+            device.device_group.name.lower() == "airconditioners".lower()
             and not isinstance(device, AirConditioner.AirConditioner)
         ):
             device = AirConditioner.AirConditioner(
@@ -156,7 +157,7 @@ class SmartHome:
             location = self.locationMap[device.location.name]
 
             self.deviceQueue.enqueue(
-                Task.Task(
+                    priorityqueue.Task(
                     device,
                     device.device_type.priority
                     + device.device_group.priority
@@ -170,7 +171,7 @@ class SmartHome:
                 location = self.locationMap[device.location.name]
 
                 self.powerReducibleDevices.enqueue(
-                    Task.Task(
+                    priorityqueue.Task(
                         device,
                         device.device_type.priority
                         + device.device_group.priority
@@ -196,7 +197,7 @@ class SmartHome:
         location = self.locationMap[device.location.name]
 
         self.deviceQueue.enqueue(
-            Task.Task(
+            priorityqueue.Task(
                 device,
                 device.device_type.priority
                 + device.device_group.priority
@@ -209,7 +210,7 @@ class SmartHome:
             location = self.locationMap[device.location.name]
 
         self.powerReducibleDevices.enqueue(
-            Task.Task(
+            priorityqueue.Task(
                 device,
                 device.device_type.priority
                 + device.device_group.priority
@@ -239,7 +240,7 @@ class SmartHome:
         self.typeMap[device.device_type.name].remove_device(device)
         self.locationMap[device.location.name].remove_device(device)
 
-    def getDeviceByName(self, name: str) -> Device | None:
+    def getDeviceByName(self, name: str) -> Device.Device | None:
 
         for device in self.poweredOnDevices:
             if device.deviceName.lower() == name.lower():
@@ -249,7 +250,7 @@ class SmartHome:
                 return device
         return None
 
-    def getDeviceByID(self, deviceId: int) -> Device | None:
+    def getDeviceByID(self, deviceId: int) -> Device.Device | None:
 
         for device in self.poweredOnDevices:
             if device.deviceId == deviceId:
@@ -299,7 +300,7 @@ class SmartHome:
         for device in list(self.poweredOffDevices):
             self.turnOnDevice(device)
 
-    def getDevice(self, identifier: str | int) -> Device | None:
+    def getDevice(self, identifier: str | int) -> Device.Device | None:
 
         if isinstance(identifier, int):
             return self.getDeviceByID(identifier)
@@ -409,7 +410,7 @@ class SmartHome:
                 # self.addRule(self.parseRule(f"turn {removeDevice.deviceId} off"))
                 self.turnOffDevice(removeDevice)
                 self.turnBackOnDevices.enqueue(
-                    Task.Task(device, -removeTask.priority)
+                    priorityqueue.Task(device, -removeTask.priority)
                 )
             else:
                 # add rule
@@ -766,16 +767,14 @@ class SmartHome:
             randomDouble = self.random.random()
             if randomDouble >= 0.6:
                 toTurnOff.append(device)
-                # device.flipInteractionState();  # Removed
+
             elif device.powerLevel != 0:
                 device.powerLevel = self.random.randint(1, 6)
 
         for device in self.poweredOffDevices:
             if not isinstance(device, Device):
                 continue
-            # if (device.getInteraction()) {
-            # device.flipInteractionState();  # Removed
-            # } else
+
             if self.random.random() >= 0.6:
                 toTurnOn.append(device)
 
@@ -807,7 +806,7 @@ class SmartHome:
         except ValueError:
             return False
 
-    def getDevicesByGroup(self, groupName: str) -> list[Device]:
+    def getDevicesByGroup(self, groupName: str) -> list[Device.Device]:
 
         return self.groupMap[groupName].devices
 
@@ -823,11 +822,11 @@ class SmartHome:
 
         return self.locationMap
 
-    def getDevicesByType(self, typeName: str) -> list[Device]:
+    def getDevicesByType(self, typeName: str) -> list[Device.Device]:
 
         return self.typeMap[typeName].devices
 
-    def getDevicesByLocation(self, locationName: str) -> list[Device]:
+    def getDevicesByLocation(self, locationName: str) -> list[Device.Device]:
 
         return self.locationMap[locationName].devices
 
@@ -879,15 +878,15 @@ class SmartHome:
 
         return self.simulate
 
-    def getPoweredOnDevices(self) -> list[Device]:
+    def getPoweredOnDevices(self) -> list[Device.Device]:
 
         return self.poweredOnDevices
 
-    def getPoweredOffDevices(self) -> list[Device]:
+    def getPoweredOffDevices(self) -> list[Device.Device]:
 
         return self.poweredOffDevices
 
-    def getDevices(self) -> list[Device]:
+    def getDevices(self) -> list[Device.Device]:
 
         devices = []
         devices.extend(self.poweredOnDevices)
@@ -977,3 +976,9 @@ class SmartHome:
     def getTurnBackOnDevices(self) -> priorityqueue.PriorityQueue:
 
         return self.turnBackOnDevices
+    
+
+    # ========================================================================
+    #Testing
+    # ========================================================================
+

@@ -1,5 +1,5 @@
 from enum import Enum
-from ..devices.device import Device
+from ..devices.Device import Device
 
 class DeviceLocationEnum(Enum):
     LIVINGROOM = "Living Room"
