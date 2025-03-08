@@ -2,7 +2,7 @@ from ..datastructures import linkedlist, priorityqueue
 from ..devices import AirConditioner, Device
 from ..enums import DeviceGroup, Devicelocation, DeviceType
 from ..misc import RuleParsingException
-from ..tasks import LogTask, Rule, Task
+from ..tasks import LogTask, rule, Task
 
 import logging
 import random
