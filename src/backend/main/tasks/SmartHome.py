@@ -1,4 +1,5 @@
-from ..datastructures import linkedlist, priorityqueue
+from ..datastructures.LinkedList import LinkedList, Node
+from ..datastructures.PriorityQueue import PriorityQueue, Task
 from ..devices import AirConditioner, Device
 from ..enums import DeviceGroup, Devicelocation, DeviceType
 from ..misc import RuleParsingException
@@ -34,15 +35,15 @@ class SmartHome:
         self.poweredOnDevices = []
         self.poweredOffDevices = []
 
-        self.deviceQueue = priorityqueue.PriorityQueue()
-        self.powerReducibleDevices = priorityqueue.PriorityQueue()
-        self.turnBackOnDevices = priorityqueue.PriorityQueue()
+        self.deviceQueue = PriorityQueue()
+        self.powerReducibleDevices = PriorityQueue()
+        self.turnBackOnDevices = PriorityQueue()
 
-        self.loggingList = linkedlist.LinkedList()
-        self.powerConsumptionLogList = linkedlist.LinkedList()
-        self.deviceBatteryLogList = linkedlist.LinkedList()
+        self.loggingList = LinkedList()
+        self.powerConsumptionLogList = LinkedList()
+        self.deviceBatteryLogList = LinkedList()
 
-        self.ruleList = linkedlist.LinkedList()
+        self.ruleList = LinkedList()
 
         self.infoTasks = []
         self.warningTasks = []
@@ -132,7 +133,7 @@ class SmartHome:
     def addDevice(self, device: Device):
 
         if (
-            device.device_group.name.lower() == "airconditioners".lower()
+            device.device_group.name.lower() == "airconditioners"
             and not isinstance(device, AirConditioner.AirConditioner)
         ):
             device = AirConditioner.AirConditioner(
@@ -157,7 +158,7 @@ class SmartHome:
             location = self.locationMap[device.location.name]
 
             self.deviceQueue.enqueue(
-                    priorityqueue.Task(
+                    Task(
                     device,
                     device.device_type.priority
                     + device.device_group.priority
@@ -171,7 +172,7 @@ class SmartHome:
                 location = self.locationMap[device.location.name]
 
                 self.powerReducibleDevices.enqueue(
-                    priorityqueue.Task(
+                    Task(
                         device,
                         device.device_type.priority
                         + device.device_group.priority
@@ -197,7 +198,7 @@ class SmartHome:
         location = self.locationMap[device.location.name]
 
         self.deviceQueue.enqueue(
-            priorityqueue.Task(
+            Task(
                 device,
                 device.device_type.priority
                 + device.device_group.priority
@@ -210,7 +211,7 @@ class SmartHome:
             location = self.locationMap[device.location.name]
 
         self.powerReducibleDevices.enqueue(
-            priorityqueue.Task(
+            Task(
                 device,
                 device.device_type.priority
                 + device.device_group.priority
@@ -410,7 +411,7 @@ class SmartHome:
                 # self.addRule(self.parseRule(f"turn {removeDevice.deviceId} off"))
                 self.turnOffDevice(removeDevice)
                 self.turnBackOnDevices.enqueue(
-                    priorityqueue.Task(device, -removeTask.priority)
+                    Task(device, -removeTask.priority)
                 )
             else:
                 # add rule
@@ -945,19 +946,19 @@ class SmartHome:
  
         self.deviceBatteryTasks.clear()
 
-    def getDeviceBatteryLogList(self) -> linkedlist.LinkedList:
+    def getDeviceBatteryLogList(self) -> LinkedList:
 
         return self.deviceBatteryLogList
 
-    def getPowerConsumptionLogList(self) -> linkedlist.LinkedList:
+    def getPowerConsumptionLogList(self) -> LinkedList:
 
         return self.powerConsumptionLogList
 
-    def getLoggingList(self) -> linkedlist.LinkedList:
+    def getLoggingList(self) -> LinkedList:
 
         return self.loggingList
 
-    def getRuleList(self) -> linkedlist.LinkedList:
+    def getRuleList(self) -> LinkedList:
 
         return self.ruleList
 
@@ -965,15 +966,15 @@ class SmartHome:
 
         self.deviceBatteryLogList.clear()
 
-    def getDeviceQueue(self) -> priorityqueue.PriorityQueue:
+    def getDeviceQueue(self) -> PriorityQueue:
 
         return self.deviceQueue
 
-    def getPowerReducibleDevices(self) -> priorityqueue.PriorityQueue:
+    def getPowerReducibleDevices(self) -> PriorityQueue:
 
         return self.powerReducibleDevices
 
-    def getTurnBackOnDevices(self) -> priorityqueue.PriorityQueue:
+    def getTurnBackOnDevices(self) -> PriorityQueue:
 
         return self.turnBackOnDevices
     
