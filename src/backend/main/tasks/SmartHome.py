@@ -811,15 +811,15 @@ class SmartHome:
 
         return self.groupMap[groupName].devices
 
-    def getDeviceGroups(self) -> dict[str, DeviceGroup]:
+    def getDeviceGroups(self) -> dict[str, DeviceGroup.DeviceGroup]:
 
         return self.groupMap
 
-    def getDeviceTypes(self) -> dict[str, DeviceType]:
+    def getDeviceTypes(self) -> dict[str, DeviceType.DeviceType]:
 
         return self.typeMap
 
-    def getDeviceLocations(self) -> dict[str, Devicelocation]:
+    def getDeviceLocations(self) -> dict[str, Devicelocation.DeviceLocation]:
 
         return self.locationMap
 
