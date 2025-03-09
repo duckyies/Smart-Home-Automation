@@ -1,4 +1,5 @@
 import Device
+import time
 
 class AirConditioner(Device):
     def __init__(self, device_name, device_type, device_group, location, is_turned_on, battery_level, power_consumption, max_battery_capacity, power_level, mode):
