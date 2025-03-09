@@ -407,15 +407,15 @@ class SmartHome:
                     f"Reducing power consumption by turning off {device.deviceName}"
                 )
 
-                # add rule
-                # self.addRule(self.parseRule(f"turn {removeDevice.deviceId} off"))
+                # add curr_rule
+                # self.addRule(self.parseRule(f"turn {removeDevice.device_id} off"))
                 self.turnOffDevice(removeDevice)
                 self.turnBackOnDevices.enqueue(
                     Task(device, -removeTask.priority)
                 )
             else:
-                # add rule
-                # self.addRule(self.parseRule(f"set {device.deviceId} 1"))
+                # add curr_rule
+                # self.addRule(self.parseRule(f"set {device.device_id} 1"))
                 device.powerLevel = 1
         else:
             turnBackOnTask = self.turnBackOnDevices.dequeue()
@@ -438,9 +438,9 @@ class SmartHome:
                 self.logger.info(
                     f"Turning back on {turnBackOnTask.task.deviceName}"
                 )
-                # add rule
+                # add curr_rule
                 # self.addRule(
-                #    self.parseRule(f"turn {turnBackOnTask.task.deviceId} on")
+                #    self.parseRule(f"turn {turnBackOnTask.task.device_id} on")
                 # )
                 self.turnOnDevice(turnBackOnDevice)
 
@@ -470,7 +470,7 @@ class SmartHome:
         try:
             self.scheduler.submit(self._runExecuteRulesPeriodically)
         except Exception as e:
-            self.logger.error(f"Error during rule execution: {e}")
+            self.logger.error(f"Error during curr_rule execution: {e}")
             self.logger.exception(e)
 
     def _runExecuteRulesPeriodically(self):
@@ -725,7 +725,7 @@ class SmartHome:
                 self.addLog(logging.SEVERE, f"Temperature in {location} is below 10 degrees!")
 
 
-            # if (location.temperature != idealTemp) {
+            # if (location.temperature != ideal_temp) {
             # Device airConditioner = location.getDeviceByName("AirConditioner");
             # if (airConditioner != null) {
             # addRule(parseRule("turn " + airConditioner.getDeviceID() + " on"));
@@ -845,7 +845,7 @@ class SmartHome:
     def checkTokenSize(self, tokens: list[str], size: int):
 
         if len(tokens) != size:
-            raise RuleParsingException("Invalid number of arguments for rule")
+            raise RuleParsingException("Invalid number of arguments for curr_rule")
 
     def checkTokenOnOff(self, token: str) -> bool:
             
