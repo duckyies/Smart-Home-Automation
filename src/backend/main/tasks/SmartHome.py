@@ -1,5 +1,5 @@
 from ..datastructures.LinkedList import LinkedList, Node
-from ..datastructures.PriorityQueue import PriorityQueue, Task
+from ..datastructures.priorityqueue import PriorityQueue, Task
 from ..devices import AirConditioner, Device
 from ..enums import DeviceGroup, Devicelocation, DeviceType
 from ..misc import RuleParsingException
